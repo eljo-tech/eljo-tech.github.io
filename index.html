@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hologram Chatbot</title>
+
+<style>
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0b1020;
+  perspective:3000px;
+}
+
+.container{
+  width:900px;
+  height:550px;
+  position:relative;
+  transform-style:preserve-3d;
+}
+
+.panel{
+  position:absolute;
+  width:300px;
+  height:100%;
+  top:0;
+  transform-style:preserve-3d;
+  transition:transform 1s cubic-bezier(.25,.8,.25,1);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+.panel img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  backface-visibility:hidden;
+  position:absolute;
+}
+
+/* Panel Positions */
+#panel1 { left:600px; transform-origin:left; z-index:3; }
+#panel2 { left:300px; z-index:2; }
+#panel3 { left:0; transform-origin:right; z-index:1; }
+
+/* Opening animations */
+.open1 #panel1 {
+  transform:rotateY(-180deg);
+}
+
+.open2 #panel3 {
+  transform:rotateY(180deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="brochure">
+
+  <!-- Right cover -->
+  <div class="panel" id="panel1">
+    <img src="cover.jpg">
+  </div>
+
+  <!-- Middle -->
+  <div class="panel" id="panel2">
+    <img src="inside-middle.jpg">
+  </div>
+
+  <!-- Left -->
+  <div class="panel" id="panel3">
+    <img src="inside-left.jpg">
+  </div>
+
+</div>
+
+<script>
+
+let state = 0;
+const brochure = document.getElementById("brochure");
+
+brochure.addEventListener("click", () => {
+
+  if(state === 0){
+    brochure.classList.add("open1");
+    state = 1;
+  }
+  else if(state === 1){
+    brochure.classList.add("open2");
+    state = 2;
+  }
+  else{
+    brochure.classList.remove("open1");
+    brochure.classList.remove("open2");
+    state = 0;
+  }
+
+});
+
+</script>
+
+</body>
+  </html>
