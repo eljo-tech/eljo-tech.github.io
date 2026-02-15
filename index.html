@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hologram Chatbot</title>
+<title>HoloVision 3D Trifold</title>
 
 <style>
+
 body{
   margin:0;
   height:100vh;
@@ -14,6 +15,7 @@ body{
   align-items:center;
   background:#0b1020;
   perspective:4000px;
+  overflow:hidden;
 }
 
 .brochure{
@@ -36,26 +38,42 @@ body{
   width:100%;
   height:100%;
   backface-visibility:hidden;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .side img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain; /* FIXED cropping */
 }
 
-/* Positions */
+/* Correct positioning */
+#left{
+  left:0;
+  transform-origin:right;
+  z-index:1;
+}
 
-#left{ left:0; transform-origin:right; z-index:1; }
-#middle{ left:300px; z-index:2; }
-#right{ left:600px; transform-origin:left; z-index:3; }
+#middle{
+  left:300px;
+  z-index:2;
+}
 
-/* Back sides */
+#right{
+  left:600px;
+  transform-origin:left;
+  z-index:3;
+}
+
+/* Back side */
 .back{
   transform:rotateY(180deg);
 }
 
-/* Animations */
+/* Proper folding directions */
 .open-cover #right{
   transform:rotateY(-180deg);
 }
@@ -63,6 +81,7 @@ body{
 .open-flap #left{
   transform:rotateY(180deg);
 }
+
 </style>
 </head>
 
@@ -73,7 +92,7 @@ body{
   <!-- LEFT PANEL -->
   <div class="panel" id="left">
     <div class="side front">
-      <img src="inside-flap.jpg">
+      <img src="inside-flap.png">
     </div>
     <div class="side back">
       <img src="inside-left.png">
