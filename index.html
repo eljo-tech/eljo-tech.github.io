@@ -6,7 +6,6 @@
 <title>HoloVision 3D Trifold</title>
 
 <style>
-
 body{
   margin:0;
   height:100vh;
@@ -15,7 +14,6 @@ body{
   align-items:center;
   background:#0b1020;
   perspective:4000px;
-  overflow:hidden;
 }
 
 .brochure{
@@ -25,6 +23,7 @@ body{
   transform-style:preserve-3d;
 }
 
+/* PANEL BASE */
 .panel{
   position:absolute;
   width:300px;
@@ -33,24 +32,25 @@ body{
   transition:transform 1s cubic-bezier(.25,.8,.25,1);
 }
 
+/* SIDES */
 .side{
   position:absolute;
   width:100%;
   height:100%;
   backface-visibility:hidden;
-  background:white;
   display:flex;
   justify-content:center;
   align-items:center;
+  background:white;
 }
 
 .side img{
   max-width:100%;
   max-height:100%;
-  object-fit:contain; /* FIXED cropping */
+  object-fit:contain;
 }
 
-/* Correct positioning */
+/* POSITIONS */
 #left{
   left:0;
   transform-origin:right;
@@ -68,18 +68,25 @@ body{
   z-index:3;
 }
 
-/* Back side */
+/* BACK SIDES */
 .back{
   transform:rotateY(180deg);
 }
 
-/* Proper folding directions */
+/* STATES */
+
+/* CLOSED — everything normal */
+
+/* OPEN COVER */
 .open-cover #right{
   transform:rotateY(-180deg);
+  z-index:4;
 }
 
+/* OPEN FLAP */
 .open-flap #left{
   transform:rotateY(180deg);
+  z-index:5;
 }
 
 </style>
@@ -134,8 +141,8 @@ brochure.addEventListener("click", () => {
     state = 2;
   }
   else{
-    brochure.classList.remove("open-cover");
     brochure.classList.remove("open-flap");
+    brochure.classList.remove("open-cover");
     state = 0;
   }
 
