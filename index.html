@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hologram Chatbot</title>
+    <title>HoloVision · 3D brochure (click cycle)</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
 
         .brochure {
             width: 900px;
-            height: 550px;
+            height: 560px;
             position: relative;
             transform-style: preserve-3d;
             cursor: pointer;
@@ -82,51 +82,7 @@
             transform: rotateY(180deg);
         }
 
-        /* --------------------------------------------------
-           STATE 0 : CLOSED – only cover.png visible (cover = back of left panel)
-           left panel rotated 180deg so its BACK faces front
-           middle & right stay but hidden behind? Actually we need right hidden.
-           We'll hide middle & right by setting opacity? better use pointer-events & visibility?
-           But we want clean – set transform on left to show cover, middle & right not visible because they are behind? 
-           In closed state, brochure is folded: left rotated 180 (cover up), middle remains but is sandwiched? we need to hide middle+right.
-           Use "closed" class: left rotated 180, middle & right panels rotated 180 as well so their front sides hide? No.
-           The requirement: "only cover.png on the page" – means only left panel (back) visible.
-           So we simply rotate left 180, and push middle & right out of sight with rotateY, but they still occlude.
-           Better: transform all three so that they fold flat like a real closed brochure: left rotated 180 (cover front), middle rotated 0 but covered? but still area.
-           To have *only* cover.png, middle & right must be exactly behind left. But since we have 3 panels 300px each, we need middle & right to be rotated such that they are hidden behind left.
-           Easiest: in closed state, set middle and right panels rotateY(180) so their backs face front? not ideal.
-           But we have inside-flap on back of right. We want cover visible ONLY.
-           I'll use: closed -> left rotates 180 (shows its back = cover). middle rotates 180 (its back is blank? actually middle has only front inside-middle, no back image — but its back is white/empty). but area still visible. To avoid that, we set width to 0? not necessary – make them hidden via opacity? but breaks 3D.
-           Better: move them far? but then transitions ugly.
-           I think intended behaviour: when closed, only left panel is seen (cover) – others folded behind. That is physically accurate if we rotate middle & right 180 and also shift? but left panel width 300, cover visible. the other panels are behind left but they have depth? we can make them rotate 180 and translate? 
-           But we must keep them reachable for next states.
-           I'll use: closed state (class 's0'):
-           - left: rotateY(180deg)  → cover up
-           - middle: rotateY(180deg) (its back is empty/white) -> still visible as stripe on right? no, if we also translateZ? too complex.
-           We want only cover visible – I'll set middle & right visibility: hidden? but that would break unfolding.
-           Let's think: in physical brochure, closed: cover (left back), middle and right are folded inside, so they are behind cover. Their front/back are not visible. That means we need to rotate middle 180 and also maybe rotate right so they tuck behind left. Because panel widths are 300, if left rotated 180, its back faces front. middle & right if also rotated 180 will have their backs also facing front, but they appear to the right of left, not behind. To place them behind, we need to rotate them around different origin and shift? Hard.
-           Alternatively: use different approach: in closed state, we set #middle and #right to display:none? but transition would be lost. Not elegant.
-           But the user expects a click cycle, not physical folding. So we can simply hide middle+right with opacity:0 in state0, and in state1 show left+right's inside flap? but we need inside-flap.png on back of right.
-           The sequence they described:
-           1st (initial closed): only cover.png (back of left)
-           2nd (after click): show only inside-flap.png (back of right) AND inside-left.png (front of left) → so left front visible, right back visible.
-           3rd (next click): removes inside-flap (so right back hidden) and shows inside-right.png (front of right) → so left front + middle front? actually they said "shows inside-right.png" presumably together with left front and middle front? They said "after another click it removes inside-flap.png on the back and shows inside-right.png". That means inside-right.png (front of right) becomes visible. So final open: all three fronts: inside-left, inside-middle, inside-right.
-           So states:
-           state0: CLOSED: cover (left back) visible. middle + right hidden (opacity/visibility).
-           state1: OPEN FLAP: left front (inside-left) visible + right back (inside-flap) visible. middle hidden? they said "shows only inside-flap.png and inside-left.png" – so middle should be hidden (so middle not visible).
-           state2: FULLY OPEN: left front (inside-left), middle front (inside-middle), right front (inside-right) all visible. inside-flap hidden (since right back rotated away).
-           That is clear and works with 3D if we control rotations and hide/show middle appropriately.
-           But we also must keep transitions smooth. We'll manage with classes and set opacity/visibility for middle panel accordingly, while rotating left/right.
-           For state0 (closed): left rotateY(180) → cover up. right rotateY(0) but we set visibility hidden, middle hidden.
-           For state1 (flap): left rotateY(0) → inside-left front. right rotateY(-180deg) → its back (inside-flap) shows. middle still hidden.
-           For state2 (full): left rotateY(0), right rotateY(0) → right front (inside-right). middle front naturally visible (middle only has front side). So middle visibility restored.
-           This matches request: after second click (state2) removes inside-flap (right back hidden) and shows inside-right (right front).
-           And state0: cover only.
-           Perfect! And transitions will rotate.
-
-           BUT: in state1 we show right back (inside-flap) which is exactly what we need. And right back visible when right rotated -180.
-           Also need to keep middle hidden in state0 & state1.
-        */
+     
 
         /* state0 (default/closed) – cover only */
         .brochure.state0 #left {
@@ -213,7 +169,7 @@
     </div>
 </div>
 
-<div class="hint">⚡ click brochure → cycle: cover · inside‑flap+left · full inside</div>
+<div class="hint">⚡ Shtype broshurën  -> për ta hapur</div>
 
 <script>
     (function() {
@@ -248,4 +204,4 @@
 
 <!-- note: image sources are inline SVG to show clear labels – no external files needed -->
 </body>
-  </html>
+</html>
